@@ -22,6 +22,27 @@ interface TaskDialogProps {
   showDialog: boolean;
 }
 function TaskDialogue({ task, setTask, setShowDialog, showDialog }: TaskDialogProps) {
+  const [editedTitle, setEditedTitle] = React.useState(task.title);
+  const [editedCategory, setEditedCategory] = React.useState(task.category);
+
+  const handleUpdateTitle = (title: string) => {
+    setEditedTitle(title);
+  };
+  const handleUpdateCategory = (category: string) => {
+    setEditedCategory(category);
+  };
+
+  const handleSave = () => {
+    const nextTask = {
+      ...task,
+      title: editedTitle,
+      category: editedCategory,
+    };
+
+    setTask(nextTask);
+    setShowDialog(false);
+  };
+
   return (
     <DialogContent className="max-w-5/6">
       <DialogHeader>
@@ -30,8 +51,16 @@ function TaskDialogue({ task, setTask, setShowDialog, showDialog }: TaskDialogPr
       </DialogHeader>
 
       <View className="gap-4">
-        <Input defaultValue={task.title} placeholder="Task title" />
-        <Input defaultValue={task.category} placeholder="Category" />
+        <Input
+          defaultValue={task.title}
+          placeholder="Task title"
+          onChangeText={handleUpdateTitle}
+        />
+        <Input
+          defaultValue={task.category}
+          placeholder="Category"
+          onChangeText={handleUpdateCategory}
+        />
       </View>
 
       <DialogFooter className="mt-4 flex flex-row gap-2">
@@ -41,7 +70,7 @@ function TaskDialogue({ task, setTask, setShowDialog, showDialog }: TaskDialogPr
           </Button>
         </DialogClose>
         <DialogClose asChild>
-          <Button className="bg-brand-primary w-1/2 rounded-3xl">
+          <Button className="bg-brand-primary w-1/2 rounded-3xl" onPress={handleSave}>
             <Text className="text-background">Save changes</Text>
           </Button>
         </DialogClose>
