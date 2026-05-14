@@ -32,7 +32,7 @@ export default function Task({ task: initialTask }: TaskProps) {
 
   return (
     <Dialog open={showDialog} onOpenChange={setShowDialog}>
-      <DialogTrigger asChild>
+      <DialogTrigger testID="task-trigger" asChild>
         <TouchableOpacity className="flex w-full flex-row">
           <View className="flex h-full w-24 px-8 py-5">
             <Checkbox
@@ -42,7 +42,9 @@ export default function Task({ task: initialTask }: TaskProps) {
               onCheckedChange={handleSetChecked}
             />
           </View>
-          <View className="border-foreground-transparent flex h-full flex-1 gap-1 border-b py-4">
+          <View
+            testID="task-info"
+            className="border-foreground-transparent flex h-full flex-1 gap-1 border-b py-4">
             <Text className="text-foreground text-xl">{task.title}</Text>
             <Text className="text-foreground-transparent text-xl">{task.category}</Text>
           </View>

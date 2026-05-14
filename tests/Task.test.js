@@ -1,4 +1,5 @@
 import { render, screen, userEvent } from '@testing-library/react-native';
+import { PortalHost } from '@rn-primitives/portal';
 import Task from '../components/Task';
 
 describe('Task', () => {
@@ -53,5 +54,32 @@ describe('Task', () => {
     await user.press(checkbox);
 
     expect(checkbox).not.toBeChecked();
+  });
+
+  test('displays the edit dialog when a task is pressed', async () => {
+    const task = {
+      id: 1,
+      title: 'Test Task',
+      category: 'Test Category',
+      isChecked: true,
+    };
+
+    render(
+      <>
+        <Task task={task} />
+        <PortalHost />
+      </>
+    );
+
+    const taskTrigger = screen.getByTestId('task-trigger');
+
+    expect(screen.queryByTestId('dialogue-header')).toBeNull();
+
+    const user = userEvent.setup();
+    await user.press(taskTrigger);
+
+    const dialogueHeader = await screen.findByTestId('dialogue-header');
+
+    expect(dialogueHeader).toBeTruthy();
   });
 });

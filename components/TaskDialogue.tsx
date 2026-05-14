@@ -53,7 +53,7 @@ function TaskDialogue({ onSave, task, setTask, setShowDialog, showDialog }: Task
 
   return (
     <DialogContent className="max-w-5/6">
-      <DialogHeader>
+      <DialogHeader testID="dialogue-header">
         <DialogTitle>Edit Task</DialogTitle>
         <DialogDescription>Make changes to your task details here.</DialogDescription>
       </DialogHeader>
